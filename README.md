@@ -51,6 +51,34 @@ git clone [https://github.com/](https://github.com/)<your-username>/<your-repo-n
 cd <your-repo-name>
 ```
 
+### Step 2: Configure Environment Variables
+Create a .env file in the root directory (or ensure docker-compose.yml defaults are populated):
+
+Code snippet
+```bash
+DB_HOST=db
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=password
+DB_NAME=librarydb
+PORT=8080
+```
+
+Note: Update client/src/API/APIClient.js with your AWS EC2 Public IP address before building the frontend image.
+
+### Step 3: Launch Containers
+Start the full stack in detached mode:
+
+```Bash
+docker compose up -d --build
+```
+
+### Step 4: Verify Deployment
+Check the status of running containers:
+
+```Bash
+docker ps
+```
 
 # Library_Management-ReactJS_NodeJS
 A simple library management module developed with ExpressJS and MySQL with ReactJS as front-end
