@@ -47,8 +47,8 @@ The application is structured into three distinct tiers running inside an isolat
 
 ### Step 1: Clone the Repository
 ```bash
-git clone [https://github.com/](https://github.com/)<your-username>/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/Payal-prog/Library_Management-ReactJS_NodeJS
+cd Library_Management-ReactJS_NodeJS
 ```
 
 ### Step 2: Configure Environment Variables
@@ -79,6 +79,12 @@ Check the status of running containers:
 ```Bash
 docker ps
 ```
+## 👥 Credits & Acknowledgments
+
+* **Original Application Repository:** [https://github.com/droidthings/Library_Management-ReactJS_NodeJS] — Uncontainerized base application source code.
+* **Course & Practical Exam:** Created and curated by **Shubham Londhe** as part of the **TrainWithShubham DevOps Phase 1 Practical Exam**.
+* **Modernization & Deployment:** Dockerized, refactored, and deployed to AWS EC2 by [Your Name / GitHub Handle].
+
 
 # Library_Management-ReactJS_NodeJS
 A simple library management module developed with ExpressJS and MySQL with ReactJS as front-end
