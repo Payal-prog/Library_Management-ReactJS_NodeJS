@@ -1,3 +1,85 @@
+# 3-Tier Library Management System — Dockerized AWS Deployment
+
+A full-stack, 3-tier Library Management application (React.js, Node.js/Express, MySQL) containerized with Docker Compose and deployed on AWS EC2. 
+
+This repository was forked from an uncontainerized legacy code repository and modernized as part of the **TrainWithShubham DevOps Phase 1 Practical Exam**.
+
+---
+
+## 🏢 System Architecture
+
+The application is structured into three distinct tiers running inside an isolated Docker bridge network:
+
+
+### Component Details
+* **Frontend Tier (React + Nginx):** Serves static production assets and acts as the web dashboard interface.
+* **Backend Tier (Node.js / Express):** Exposes RESTful API endpoints, handles business logic, and handles database queries. Refactored to use `mysql2` connection pooling to handle non-blocking asynchronous calls and database container startup delays.
+* **Database Tier (MySQL 8.0):** Stores application state, user accounts, and book metadata. Accessible **only** within the internal Docker network on port `3306` (isolated from public AWS Security Groups).
+* **Data Persistence:** Utilizes a Docker named volume (`db_data_prod`) attached to `/var/lib/mysql` so data persists across container restarts and rebuilds.
+
+---
+
+## ⚡ Key Optimizations & Engineering Fixes
+
+1. **Database Resilience & Pooling:** Migrated legacy single-connection `mysql` driver implementation to `mysql2` connection pools (`mysql2.createPool`). This eliminated backend container crash loops caused by database initialization race conditions.
+2. **Dockerfile Entrypoint Corrections:** Fixed backend Dockerfile runtime executable command (`CMD ["node", "src/server.js"]`) ensuring the HTTP server keeps running in the foreground instead of exiting immediately after reading configuration files.
+3. **Data Type Compatibility:** Updated frontend state handler logic (`LoginScreen.jsx`) to consume primitive return types directly from `mysql2` rather than legacy driver buffer structures.
+4. **Network & Port Security:** Enforced container isolation. Only HTTP ports required for application functionality are exposed to the EC2 host; MySQL database ports remain strictly private.
+
+---
+
+## 📊 Container Image Specifications
+
+| Service | Base Image | Multi-Stage Build | Final Image Size |
+| :--- | :--- | :---: | :---: |
+| **Frontend** | `node:18-alpine` → `nginx:alpine` | Yes | ~25 MB |
+| **Backend** | `node:18-alpine` | No | ~120 MB |
+| **Database** | `mysql:8.0-oracle` | No | ~500 MB |
+
+---
+
+## 🚀 Local & Production Deployment Guide
+
+### Prerequisites
+* Docker engine (`v20.10+`)
+* Docker Compose (`v2.0+`)
+* AWS EC2 Instance (Ubuntu 22.04 LTS recommended) with Ports `22`, `80`, and `8080` open in Security Groups.
+
+### Step 1: Clone the Repository
+```bash
+git clone [https://github.com/](https://github.com/)<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+```
+
+### Step 2: Configure Environment Variables
+Create a .env file in the root directory (or ensure docker-compose.yml defaults are populated):
+
+Code snippet
+```bash
+DB_HOST=db
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=password
+DB_NAME=librarydb
+PORT=8080
+```
+
+Note: Update client/src/API/APIClient.js with your AWS EC2 Public IP address before building the frontend image.
+
+### Step 3: Launch Containers
+Start the full stack in detached mode:
+
+```Bash
+docker compose up -d --build
+```
+
+### Step 4: Verify Deployment
+Check the status of running containers:
+
+```Bash
+docker ps
+```
+
 # Library_Management-ReactJS_NodeJS
 A simple library management module developed with ExpressJS and MySQL with ReactJS as front-end
 
