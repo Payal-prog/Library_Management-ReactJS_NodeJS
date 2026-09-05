@@ -86,9 +86,6 @@ docker ps
 * **Modernization & Deployment:** Dockerized, refactored, and deployed to AWS EC2 by [Your Name / GitHub Handle].
 
 
-# Library_Management-ReactJS_NodeJS
-A simple library management module developed with ExpressJS and MySQL with ReactJS as front-end
-
 ## Techonologies used in this application
 
 ### Front-end
