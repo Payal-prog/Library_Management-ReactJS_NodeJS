@@ -32,8 +32,8 @@ The application is structured into three distinct tiers running inside an isolat
 
 | Service | Base Image | Multi-Stage Build | Final Image Size |
 | :--- | :--- | :---: | :---: |
-| **Frontend** | `node:18-alpine` → `nginx:alpine` | Yes | ~25 MB |
-| **Backend** | `node:18-alpine` | No | ~120 MB |
+| **Frontend** | `node:18-alpine` → `nginx:alpine` | Yes | ~30 MB |
+| **Backend** | `node:18-alpine` → `nginx:18-alpine` | No | ~57 MB |
 | **Database** | `mysql:8.0-oracle` | No | ~500 MB |
 
 ---
