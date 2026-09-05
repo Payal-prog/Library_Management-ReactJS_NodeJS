@@ -1,19 +1,14 @@
 var mysql = require('mysql2');
 
-var connection = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
+var pool = mysql.createPool({
+    host: process.env.DB_HOST || 'db',
     port: process.env.DB_PORT || 3306,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'password',
-    database: process.env.DB_NAME || 'librarydb'
-});  
-  
-  connection.connect(function(err) {
-    if (err) {
-      console.error('error connecting: ' + err.stack);
-      return process.exit(22); //consistently exit so the Docker container will restart until it connects to the sql db
-    }
-    console.log('connected as id ' + connection.threadId);
-  });
+    database: process.env.DB_NAME || 'librarydb',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
-module.exports = connection;
+module.exports = pool;

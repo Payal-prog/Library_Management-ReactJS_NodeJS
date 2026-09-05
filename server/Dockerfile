@@ -33,7 +33,7 @@ COPY --from=builder /app ./
 USER node
 
 # Exposes port 5000 to allow external access to the application
-EXPOSE 5000
+EXPOSE 8080
 
 # Defines the command to run the application, starting the Node.js server using index.js
-CMD ["node", "src/db/index.js"]
+CMD ["node", "src/server.js"]

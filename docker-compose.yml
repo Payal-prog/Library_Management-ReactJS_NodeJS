@@ -12,6 +12,8 @@ services:
      # MYSQL_USER: root
     volumes:
       - db_data:/var/lib/mysql
+      - ./server/src/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./server/src/db/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
     networks:
       - app-network
 
@@ -38,7 +40,7 @@ services:
       DB_NAME: librarydb
       DB_PORT: 3306
     ports:
-      - "5000:5000"
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy

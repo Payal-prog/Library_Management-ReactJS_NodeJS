@@ -3,8 +3,7 @@ let _axiosInstance = null;
 
 // Creating standard instance of axios for this API Client
 _axiosInstance = axios.create({
-  //baseURL: "http://localhost:8080/api",
-  baseURL: "http://3.95.148.77:8080/api",
+  baseURL: "http://localhost:8080/api",
   timeout: 30000
 });
 
@@ -84,5 +83,13 @@ class ApiClient {
   
 
 }
+
+  
+ 
+
+
+
+
+  
 
 export default new ApiClient();
